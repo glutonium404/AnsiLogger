@@ -1,32 +1,63 @@
-#include "AnsiLogger.hpp"
+#include "includes/AnsiLogger.hpp"
+#include <string>
+#include <type_traits>
+#include <utility>
+
+class MyLogger : public AnsiLogger {
+public:
+    using AnsiLogger::AnsiLogger;
+
+    template<typename F, typename S>
+    AnsiLogger pair(std::pair<F, S>& pair) const {
+        std::string key, value;
+
+        if constexpr (! std::is_same_v<F, std::string>) {
+            key = std::to_string(pair.first);
+        }else {
+            key = pair.first;
+        }
+
+        if constexpr (! std::is_same_v<S, std::string>) {
+            value = std::to_string(pair.second);
+        }else {
+            value = pair.second;
+        }
+
+        return AnsiLogger::bg_cyan(AnsiLogger::black("KEY : VALUE")).new_line(1).reverse(AnsiLogger::tag(key, value));
+    }
+};
 
 int main() {
+    std::pair<std::string, int> p = {"MyLogger", 420};
+    MyLogger ml;
+    ml.pair(p).new_line(3).to_cout();
 
     AnsiLogger::has_nerd_font = true;
-
     AnsiLogger logger;
+
     logger
         .italic(
             logger
             .bg_magenta(logger.blue("my"))
-            .space(4)
+            .space(2)
             .yellow("name ")
             .red("is ")
             .green("meow ")
             .cyan("meow")
         )
-        .new_line()
+        .tab(2)
         .append("hi")
-        .new_line()
+        .tab(2)
         .dim(
             logger
             .bg_magenta(logger.blue("my"))
-            .space(4)
+            .space(2)
             .yellow("name ")
             .red("is ")
             .green("meow ")
             .cyan("meow")
         )
+        .new_line(2)
         .to_cout();
 
     logger

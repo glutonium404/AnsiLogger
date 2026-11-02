@@ -1,12 +1,84 @@
-#pragma once
-
 #include <iostream>
 #include <string>
 #include <string_view>
 #include <utility>
 
-#include "AnsiSequences.hpp"
-
+struct AnsiSequencesOn {
+    inline static constexpr std::string_view reset = "\033[0m";
+    inline static constexpr std::string_view bold = "\033[1m";
+    inline static constexpr std::string_view italic = "\033[3m";
+    inline static constexpr std::string_view underline = "\033[4m";
+    inline static constexpr std::string_view dim = "\033[2m";
+    inline static constexpr std::string_view blink = "\033[5m";
+    inline static constexpr std::string_view reverse = "\033[7m";
+    inline static constexpr std::string_view hidden = "\033[8m";
+    inline static constexpr std::string_view strike = "\033[9m";
+    inline static constexpr std::string_view red = "\033[31m";
+    inline static constexpr std::string_view cyan = "\033[36m";
+    inline static constexpr std::string_view black = "\033[30m";
+    inline static constexpr std::string_view green = "\033[32m";
+    inline static constexpr std::string_view yellow = "\033[33m";
+    inline static constexpr std::string_view blue = "\033[34m";
+    inline static constexpr std::string_view magenta = "\033[35m";
+    inline static constexpr std::string_view white = "\033[37m";
+    inline static constexpr std::string_view grey = "\033[90m";
+    inline static constexpr std::string_view bg_black = "\033[40m";
+    inline static constexpr std::string_view bg_red = "\033[41m";
+    inline static constexpr std::string_view bg_green = "\033[42m";
+    inline static constexpr std::string_view bg_yellow = "\033[43m";
+    inline static constexpr std::string_view bg_blue = "\033[44m";
+    inline static constexpr std::string_view bg_magenta = "\033[45m";
+    inline static constexpr std::string_view bg_cyan = "\033[46m";
+    inline static constexpr std::string_view bg_white = "\033[47m";
+    inline static constexpr std::string_view bg_grey = "\033[100m";
+    inline static constexpr std::string_view bright_black = "\033[90m";
+    inline static constexpr std::string_view bright_red = "\033[91m";
+    inline static constexpr std::string_view bright_green = "\033[92m";
+    inline static constexpr std::string_view bright_yellow = "\033[93m";
+    inline static constexpr std::string_view bright_blue = "\033[94m";
+    inline static constexpr std::string_view bright_magenta = "\033[95m";
+    inline static constexpr std::string_view bright_cyan = "\033[96m";
+    inline static constexpr std::string_view bright_white = "\033[97m";
+    inline static constexpr std::string_view heading = "\033[1;36m";
+};
+struct AnsiSequencesOff {
+    inline static constexpr std::string_view heading = "\033[22;39m";
+    inline static constexpr std::string_view bright_white = "\033[39m";
+    inline static constexpr std::string_view bright_cyan = "\033[39m";
+    inline static constexpr std::string_view bright_magenta = "\033[39m";
+    inline static constexpr std::string_view bright_blue = "\033[39m";
+    inline static constexpr std::string_view bright_yellow = "\033[39m";
+    inline static constexpr std::string_view bright_green = "\033[39m";
+    inline static constexpr std::string_view bright_red = "\033[39m";
+    inline static constexpr std::string_view bright_black = "\033[39m";
+    inline static constexpr std::string_view bg_grey = "\033[49m";
+    inline static constexpr std::string_view bg_white = "\033[49m";
+    inline static constexpr std::string_view bg_cyan = "\033[49m";
+    inline static constexpr std::string_view bg_magenta = "\033[49m";
+    inline static constexpr std::string_view bg_blue = "\033[49m";
+    inline static constexpr std::string_view bg_yellow = "\033[49m";
+    inline static constexpr std::string_view bg_green = "\033[49m";
+    inline static constexpr std::string_view bg_red = "\033[49m";
+    inline static constexpr std::string_view bg_black = "\033[49m";
+    inline static constexpr std::string_view grey = "\033[39m";
+    inline static constexpr std::string_view white = "\033[39m";
+    inline static constexpr std::string_view magenta = "\033[39m";
+    inline static constexpr std::string_view blue = "\033[39m";
+    inline static constexpr std::string_view yellow = "\033[39m";
+    inline static constexpr std::string_view green = "\033[39m";
+    inline static constexpr std::string_view black = "\033[39m";
+    inline static constexpr std::string_view cyan = "\033[39m";
+    inline static constexpr std::string_view red = "\033[39m";
+    inline static constexpr std::string_view strike = "\033[29m";
+    inline static constexpr std::string_view hidden = "\033[28m";
+    inline static constexpr std::string_view reverse = "\033[27m";
+    inline static constexpr std::string_view blink = "\033[25m";
+    inline static constexpr std::string_view dim = "\033[22m";
+    inline static constexpr std::string_view underline = "\033[24m";
+    inline static constexpr std::string_view italic = "\033[23m";
+    inline static constexpr std::string_view bold = "\033[22m";
+    inline static constexpr std::string_view reset = "\033[0m";
+};
 
 class AnsiLogger {
 public:
