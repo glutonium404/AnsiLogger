@@ -29,52 +29,66 @@ public:
 };
 
 int main() {
-    std::pair<std::string, int> p = {"MyLogger", 420};
-    MyLogger ml;
-    ml.pair(p).new_line(3).to_cout();
-
     AnsiLogger::has_nerd_font = true;
     AnsiLogger logger;
 
+    logger.bold(logger.cyan("AnsiLogger showcase")).new_line(2).to_cout();
+
     logger
-        .italic(
+        .underline(
             logger
-            .bg_magenta(logger.blue("my"))
-            .space(2)
-            .yellow("name ")
-            .red("is ")
-            .green("meow ")
-            .cyan("meow")
+            .red("red and underlined").tab()
+            .italic(logger.strike("italic and struck")).tab()
+            .yellow("yellow and underlined")
         )
-        .tab(2)
-        .append("hi")
-        .tab(2)
-        .dim(
-            logger
-            .bg_magenta(logger.blue("my"))
-            .space(2)
-            .yellow("name ")
-            .red("is ")
-            .green("meow ")
-            .cyan("meow")
-        )
+        .new_line(2)
+        .bold("bold").space(1)
+        .italic("italic").space(1)
+        .dim("dim").space(1)
+        .blink("blink").space(1)
+        .reverse("reverse").space(1)
+        .hidden("hidden").append(" <- hidden")
         .new_line(2)
         .to_cout();
 
     logger
-        .italic(
-            logger
-            .log("SYSTEM DIAGNOSTICS INITIALIZED")
-            .new_line(2)
-            .warning("The system has detected a significant discrepancy between the expected sensor input values and the actual telemetry data received from the auxiliary cooling units, which could lead to an overheating event if the current workload is not throttled immediately across all processing nodes.")
-            .new_line(2)
-            .error("A critical memory corruption event was identified at memory address 0x004F3A during the execution of the high-level garbage collection routine, resulting in an irreversible state inconsistency that demands an immediate process termination and a full manual hardware reset to prevent data loss.")
-        )
-        .new_line(3)
-        .success("Success").new_line()
-        .debug("Debug").new_line()
-        .info("Info").new_line()
-        .trace("Trace").new_line()
-        .tag("key", "value")
+        .red("red").space(1)
+        .green("green").space(1)
+        .blue("blue").space(1)
+        .magenta("magenta").space(1)
+        .cyan("cyan").space(1)
+        .bright_yellow("bright yellow")
+        .new_line()
+        .bg_red("red background").space(1)
+        .bg_green("green background").space(1)
+        .bg_blue("blue background")
+        .new_line(2)
         .to_cout();
+
+    logger
+        .log("Application started").new_line()
+        .info("Configuration loaded").new_line()
+        .success("Health check passed").new_line()
+        .warning("This is a warning").new_line()
+        .debug("Debug details enabled").new_line()
+        .trace("Trace message").new_line()
+        .error("An example error message")
+        .new_line(2)
+        .to_cout();
+
+    logger
+        .tag(
+            "status",
+            logger.bg_green( logger.black("online") ).to_string()
+        )
+        .space(3)
+        .tag("version", "1.0.0")
+        .new_line()
+        .append("Indented text:")
+        .tab(2)
+        .append("two tabs")
+        .to_cout();
+
+    std::pair<std::string, int> pair = {"MyLogger", 420};
+    MyLogger().pair(pair).new_line(2).to_cout();
 }
