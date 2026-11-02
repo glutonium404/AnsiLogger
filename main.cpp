@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <utility>
 
+// example of how you can extend the class to then create your own methods or just write simple helper function
 class MyLogger : public AnsiLogger {
 public:
     using AnsiLogger::AnsiLogger;
