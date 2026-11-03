@@ -1,9 +1,12 @@
 #pragma once
 
+#include <ios>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <string_view>
 #include <utility>
+#include <filesystem>
 
 #include "AnsiSequences.hpp"
 
@@ -11,6 +14,7 @@
 class AnsiLogger {
 public:
     inline static bool has_nerd_font = true;
+    enum OutputMode { Append, Overwite };
 
 protected:
     std::string _msg;
@@ -33,7 +37,7 @@ public:
     AnsiLogger() = default;
 
     AnsiLogger(std::string msg)
-        : _msg(std::move(msg)) {}
+    : _msg(std::move(msg)) {}
 
 
     /////////////////////////////////////////////////////////////////
@@ -361,13 +365,59 @@ public:
         return AnsiLogger(_msg + std::string(AnsiSequencesOn::reset));
     }
 
+    AnsiLogger clear() {
+        _msg.clear();
+        return *this;
+    }
+
     std::string to_string() const {
         return _msg + std::string(AnsiSequencesOn::reset);
     }
 
-    void to_cout(const bool new_line = true) {
+    void to_cout(const char* msg) const {
+        std::cout << msg;
+    }
+
+    void to_cout(const bool new_line = true) const {
         std::cout << to_string();
         if(new_line)
             std::cout << "\n";
+    }
+
+    void to_cerr(const bool new_line = true) const {
+        std::cerr << to_string();
+        if(new_line)
+            std::cerr << "\n";
+    }
+
+    void to_cerr(const char* msg) const {
+        std::cerr << msg;
+    }
+
+    void to_file(const std::filesystem::path path, const OutputMode out_mode) {
+        try {
+            if(!path.has_filename()) {
+                clear().error("No filename provided: " + std::string(path)).to_cerr();
+                return;
+            }
+
+            std::filesystem::path parent_path = path.parent_path();
+
+            if(!parent_path.empty() || !std::filesystem::exists(parent_path)) {
+                std::filesystem::create_directories(parent_path);
+            }
+
+            std::ofstream file(path, (out_mode == OutputMode::Append ? std::ios::app : std::ios::out));
+
+            if(!file.is_open()) {
+                clear().error("Unable to open file: " + std::string(path)).to_cerr();
+                return;
+            }
+
+            file << to_string();
+            file.close();
+        }catch(const std::filesystem::filesystem_error& err) {
+            clear().error("File system error : " + std::string(err.what())).to_cerr();
+        }
     }
 };
